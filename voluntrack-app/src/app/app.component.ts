@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -33,7 +33,7 @@ export class AppComponent {
 
   items: MenuItem[];
   activeItem: MenuItem;
-  constructor() {
+  constructor(private router: Router) {
     this.items = [
       { label: 'worked Hours', routerLink: '/home' },
       { label: 'submit Hours', routerLink: '/about' },
@@ -43,5 +43,9 @@ export class AppComponent {
 
     this.activeItem = this.items[0];
   }
-  
+
+  login() {
+    this.router.navigate(['/volunteer']);
+  }
+
 }
