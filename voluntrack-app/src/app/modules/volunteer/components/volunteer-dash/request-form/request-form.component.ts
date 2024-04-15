@@ -12,6 +12,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
+import {VolunteerService} from "../../../services/volunteer.service";
 @Component({
   selector: 'app-request-form',
   standalone: true,
@@ -44,7 +45,7 @@ export class RequestFormComponent {
 
 
   displayModal:boolean = false;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private vol: VolunteerService) {
     this.organizations = [
       {label: "Humane Society"}
     ];
@@ -56,12 +57,15 @@ export class RequestFormComponent {
       date: [''],
       hours: [''],
     })
+    this.vol.getVolunteers().subscribe(data => {
+      console.log(data);
+    });
   }
 
   search() {
     this.selectedOrg = this.organizations[0]
   }
-  
+
   requestHours() {
 
   }
@@ -69,5 +73,5 @@ export class RequestFormComponent {
     this.displayModal = true;
   }
 
-  
+
 }

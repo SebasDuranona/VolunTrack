@@ -45,6 +45,7 @@ export class AppComponent {
   }
 
   login() {
+    console.log(`test log`);
     this.router.navigate(['/volunteer']);
   }
 
