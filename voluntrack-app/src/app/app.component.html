@@ -1,0 +1,55 @@
+
+<body class="min-w-full h-screen overflow-hidden">
+    <header>
+        <p-tabMenu [model]="items" [activeItem]="activeItem">
+          <ng-template pTemplate="item" let-item>
+              <a class="p-menuitem-link flex justify-content-between align-items-center p-3">
+                  <div>
+                      <span [class]="item.icon"></span>
+                      <span> {{ item.label }}</span>
+                  </div>
+                  <div>
+                      <!-- <p-badge *ngIf="item.badge" [value]="item.badge" [severity]="item.badgeSeverity"></p-badge> -->
+                  </div>
+              </a>
+          </ng-template>
+        </p-tabMenu>
+    </header>
+    <router-outlet></router-outlet>
+    <div class="flex h-screen justify-center space-x-10 items-center">
+        <p-card header="Volunteers" subheader="Click Here" [style]="{ width: '360px' }">
+            <ng-template pTemplate="header">
+                <div class="h-80 overflow-hidden">
+                    <img alt="Card" class="object-cover w-full h-full" src="https://content.schoolinsites.com/api/documents/7b5b17ac081248c7a86162f78319a6c8.png" />
+                </div>
+            </ng-template>
+
+            
+            <ng-template pTemplate="footer">
+                <div class="flex justify-center gap-x-10">
+                    <p-button label="Login" icon="pi pi-times" [style]="{ 'margin-left': '.5em' }"></p-button>
+                    <p-button label="Register"></p-button>
+                </div>
+            </ng-template>
+        </p-card>
+        <p-card header="Organizations" subheader="Click Here" [style]="{ width: '360px' }">
+            <ng-template pTemplate="header">
+                <div class="h-80 overflow-hidden">
+                    <img alt="Card" src="https://aso.icann.org/wp-content/uploads/2020/04/ASO-web-graphics-4.6.20_purpose-icon.png" />
+                </div>
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+                <div class="flex justify-center gap-x-10">
+                    <p-button label="Login" icon="pi pi-times" class="ml-2"></p-button>
+                    <p-button label="Register"></p-button>
+                </div>
+            </ng-template>
+        </p-card>
+        
+    </div>
+</body>
+
+<footer>
+
+</footer>

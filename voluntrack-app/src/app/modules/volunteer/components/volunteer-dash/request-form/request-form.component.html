@@ -1,0 +1,41 @@
+    <div class="max-w-md w-full space-y-8 p-3">
+        <!-- <p-button (click)="showDialog()">Submit request</p-button>
+        <p-dialog header="Title" [(visible)]="displayModal">
+            Content
+        </p-dialog> -->
+        <div>
+            <h2 class="mt-6 text-center text-5xl font-extrabold text-gray-900">request hours</h2>
+        </div>
+            
+        <form class="rounded-md space-y-6 flex-col items-center" [formGroup]="requestForm" (ngSubmit)="requestHours()">
+            <div class="rounded-md -space-y-px  flex flex-col items-center">
+                <div class="mx-auto pb-5 pt-2">
+                    <p-floatLabel class="inline-block">
+                        <input id="org" type="text" pInputText [(ngModel)]="selectedOrg" />
+                        <label for="organization">Organization</label>
+                    </p-floatLabel>
+                </div>
+                    <div class="mx-auto pb-5 pt-2">
+                        <div>
+                            <p-floatLabel class="inline-block">
+                                <p-calendar formControlName="date" [showIcon]="false" placeholder="Select a Date"></p-calendar>
+                                <label for="date">Date</label>
+                            </p-floatLabel>
+                          </div>
+                    </div>
+                <div class="mx-auto pb-5 pt-2">
+                    <p-floatLabel class=" inline-block">
+                        <input id="hours" type="text" pInputText [(ngModel)]="hours" />
+                        <label for="hours">Hours</label>
+                    </p-floatLabel>
+                </div>
+                
+            </div>
+            <div>
+                <p-button type="submit"
+                        class="group relative w-full flex justify-center px-4 border border-transparent">
+                  submit request
+                </p-button>
+              </div>
+        </form>
+    </div>    
