@@ -45,7 +45,7 @@ export class RequestFormComponent {
 
 
   displayModal:boolean = false;
-  constructor(private fb: FormBuilder, private vol: VolunteerService) {
+  constructor(private fb: FormBuilder) {
     this.organizations = [
       {label: "Humane Society"}
     ];
@@ -57,9 +57,6 @@ export class RequestFormComponent {
       date: [''],
       hours: [''],
     })
-    this.vol.getVolunteers().subscribe(data => {
-      console.log(data);
-    });
   }
 
   search() {

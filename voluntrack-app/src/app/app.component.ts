@@ -44,9 +44,13 @@ export class AppComponent {
     this.activeItem = this.items[0];
   }
 
-  login() {
+  loginVolunteer() {
     console.log(`test log`);
-    this.router.navigate(['/volunteer']);
+    this.router.navigate(['/login']);
+  }
+
+  loginOrganization() {
+    this.router.navigate(['/Orglogin']);
   }
 
 }
