@@ -6,12 +6,12 @@
         <div>
             <h2 class="mt-6 text-center text-5xl font-extrabold text-gray-900">request hours</h2>
         </div>
-            
+
         <form class="rounded-md space-y-6 flex-col items-center" [formGroup]="requestForm" (ngSubmit)="requestHours()">
             <div class="rounded-md -space-y-px  flex flex-col items-center">
                 <div class="mx-auto pb-5 pt-2">
                     <p-floatLabel class="inline-block">
-                        <input id="org" type="text" pInputText [(ngModel)]="selectedOrg" />
+                        <input id="org" type="text" pInputText [(ngModel)]="selectedOrg" [ngModelOptions]="{standalone: true}"/>
                         <label for="organization">Organization</label>
                     </p-floatLabel>
                 </div>
@@ -25,11 +25,11 @@
                     </div>
                 <div class="mx-auto pb-5 pt-2">
                     <p-floatLabel class=" inline-block">
-                        <input id="hours" type="text" pInputText [(ngModel)]="hours" />
+                        <input id="hours" type="text" pInputText [(ngModel)]="hours" [ngModelOptions]="{standalone: true}"/>
                         <label for="hours">Hours</label>
                     </p-floatLabel>
                 </div>
-                
+
             </div>
             <div>
                 <p-button type="submit"
@@ -38,4 +38,4 @@
                 </p-button>
               </div>
         </form>
-    </div>    
+    </div>

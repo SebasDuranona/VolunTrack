@@ -24,10 +24,10 @@
                 </div>
             </ng-template>
 
-            
+
             <ng-template pTemplate="footer">
                 <div class="flex justify-center gap-x-10">
-                    <p-button label="Login" icon="pi pi-times" [style]="{ 'margin-left': '.5em' }"></p-button>
+                    <p-button label="Login" icon="pi pi-times" [style]="{ 'margin-left': '.5em' }" (click)="loginVolunteer()"></p-button>
                     <p-button label="Register"></p-button>
                 </div>
             </ng-template>
@@ -38,15 +38,15 @@
                     <img alt="Card" src="https://aso.icann.org/wp-content/uploads/2020/04/ASO-web-graphics-4.6.20_purpose-icon.png" />
                 </div>
             </ng-template>
-        
+
             <ng-template pTemplate="footer">
                 <div class="flex justify-center gap-x-10">
-                    <p-button label="Login" icon="pi pi-times" class="ml-2"></p-button>
+                    <p-button label="Login" icon="pi pi-times" class="ml-2" (click)="loginOrganization()"></p-button>
                     <p-button label="Register"></p-button>
                 </div>
             </ng-template>
         </p-card>
-        
+
     </div>
 </body>
 
