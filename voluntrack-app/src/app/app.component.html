@@ -28,7 +28,7 @@
             <ng-template pTemplate="footer">
                 <div class="flex justify-center gap-x-10">
                     <p-button label="Login" icon="pi pi-times" [style]="{ 'margin-left': '.5em' }" (click)="loginVolunteer()"></p-button>
-                    <p-button label="Register"></p-button>
+                    <p-button label="Register" (click)="registerVolunteer()"></p-button>
                 </div>
             </ng-template>
         </p-card>
@@ -42,7 +42,7 @@
             <ng-template pTemplate="footer">
                 <div class="flex justify-center gap-x-10">
                     <p-button label="Login" icon="pi pi-times" class="ml-2" (click)="loginOrganization()"></p-button>
-                    <p-button label="Register"></p-button>
+                    <p-button label="Register" (click)="registerOrganization()"></p-button>
                 </div>
             </ng-template>
         </p-card>

@@ -4,20 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 
-
 @Component({
-  selector: 'app-signup',
+  selector: 'app-signup-org',
   standalone: true,
   imports: [
     FloatLabelModule,
     FormsModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
   ],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+  templateUrl: './signup-org.component.html',
+  styleUrl: './signup-org.component.scss'
 })
-export class SignupComponent {
+export class SignupOrgComponent {
   username: string = '';
   password: string = '';
 

@@ -13,12 +13,13 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
-import { filter } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Project } from './projects/project';
 
 import { ProjectService } from './projects/project.service';
 import { RequestFormComponent } from './request-form/request-form.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-volunteer-dash',
@@ -48,6 +49,7 @@ export class VolunteerDashComponent {
   date: Date = new Date();
 
 
+
   displayModal:boolean = false;
 
   
@@ -55,12 +57,7 @@ export class VolunteerDashComponent {
   cols: any[] = [];
 
 
-
-
-
-  constructor(private fb: FormBuilder) {
-
-  }
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.cols = [
@@ -69,6 +66,16 @@ export class VolunteerDashComponent {
       { field: 'hours', header: 'Hours' },
       { field: 'status', header: 'Status' },
     ];
+
+    this.http.get<Project[]>('http://localhost:8080/voluntrack/projects').subscribe(
+      data => {
+        console.log(data)
+        this.projects = data;
+      },
+      error => {
+        console.log('Error fetching projects: ', error);
+      }
+    );
   }
 
   requestHours() {

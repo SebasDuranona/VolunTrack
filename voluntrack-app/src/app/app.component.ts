@@ -53,4 +53,13 @@ export class AppComponent {
     this.router.navigate(['/Orglogin']);
   }
 
+  registerVolunteer() {
+    console.log(`test log`);
+    this.router.navigate(['/register']);
+  }
+
+  registerOrganization() {
+    this.router.navigate(['/Orgregister']);
+  }
+
 }

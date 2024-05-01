@@ -13,9 +13,9 @@
                     </div>
                 </div>
             </ng-template>
-            <ng-template pTemplate="header" let-columns [reorderableColumns]="true">
+            <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th *ngFor="let col of columns" pReorderableColumn>
+                    <th *ngFor="let col of columns">
                         {{ col.header }}
                     </th>
                 </tr>
