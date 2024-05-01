@@ -11,6 +11,6 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getProject(): Observable<Project[]> {
-    return this.http.get<Project[]>('')
+    return this.http.get<Project[]>('http://localhost:8080/voluntrack/projects')
   }
 }

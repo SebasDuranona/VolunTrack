@@ -21,7 +21,7 @@ export class SignupComponent {
   username: string = '';
   password: string = '';
 
-  login() {
+  register() {
     // Add your login logic here
     console.log('Username:', this.username);
     console.log('Password:', this.password);
