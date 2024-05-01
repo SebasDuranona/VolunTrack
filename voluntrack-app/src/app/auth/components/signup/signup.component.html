@@ -10,6 +10,18 @@
         <div class="rounded-md shadow-sm -space-y-px  flex flex-col items-center">
             <div class="mx-auto py-5">
                 <p-floatLabel class=" inline-block">
+                    <input id="firstName" type="text" pInputText [(ngModel)]="firstname" />
+                    <label for="firstName">First Name</label>
+                </p-floatLabel>
+            </div>
+            <div class="mx-auto py-5">
+                <p-floatLabel class=" inline-block">
+                    <input id="lastName" type="text" pInputText [(ngModel)]="lastname" />
+                    <label for="lastName">Last Name</label>
+                </p-floatLabel>
+            </div>
+            <div class="mx-auto py-5">
+                <p-floatLabel class=" inline-block">
                     <input id="username" type="text" pInputText [(ngModel)]="username" />
                     <label for="username">username</label>
                 </p-floatLabel>
@@ -25,7 +37,7 @@
         <div>
           <button type="submit"
                   class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            sign in
+            sign up
           </button>
         </div>
       </form>

@@ -18,11 +18,15 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
+  firstname: string = '';
+  lastname: string = '';
   username: string = '';
   password: string = '';
 
   register() {
-    // Add your login logic here
+    // Add your register logic here
+    console.log('firstname:', this.firstname);
+    console.log('lastname:', this.lastname);
     console.log('Username:', this.username);
     console.log('Password:', this.password);
   }
