@@ -10,6 +10,7 @@ import org.voluntrack.voluntrack.service.OrganizationService;
 import org.voluntrack.voluntrack.vo.ResponseVO;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -29,6 +30,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     public ResponseVO saveOrganizations(List<Organizations> organizations) {
         ResponseVO responseVO = new ResponseVO();
         try {
+            organizations.stream().forEach(organization -> {
+                if (Objects.isNull(organization.getUserName())) {
+                    organization.setUserName(organization.getName().toLowerCase());
+                }
+            });
             organizationRepository.saveAll(organizations);
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -23,6 +23,9 @@ public class Volunteer {
     @Column(name = "LAST_NAME")
     private String lastName;
 
+    @Column(name = "USER_NAME")
+    private String userName;
+
     @Column(name = "PASSWORD")
     private String password;
 }

@@ -11,6 +11,7 @@ import org.voluntrack.voluntrack.vo.ResponseVO;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -30,6 +31,11 @@ public class VolunteerServiceImpl implements VolunteerService {
     public ResponseVO saveVolunteers(List<Volunteer> volunteers) {
         ResponseVO responseVO = new ResponseVO();
         try {
+           volunteers.stream().forEach(volunteer -> {
+               if (Objects.isNull(volunteer.getUserName())) {
+                   volunteer.setUserName(volunteer.getFirstName().toLowerCase().charAt(0) + volunteer.getLastName().toLowerCase());
+               }
+           });
            volunteerRepository.saveAll(volunteers);
         } catch (Exception e) {
            log.error(e.getMessage());
