@@ -25,11 +25,16 @@
                     </div>
                 <div class="mx-auto pb-5 pt-2">
                     <p-floatLabel class=" inline-block">
+                        <input id="info" type="text" pInputText [(ngModel)]="info" [ngModelOptions]="{standalone: true}"/>
+                        <label for="info">Project Description</label>
+                    </p-floatLabel>
+                </div>
+                <div class="mx-auto pb-5 pt-2">
+                    <p-floatLabel class=" inline-block">
                         <input id="hours" type="text" pInputText [(ngModel)]="hours" [ngModelOptions]="{standalone: true}"/>
                         <label for="hours">Hours</label>
                     </p-floatLabel>
                 </div>
-
             </div>
             <div>
                 <p-button type="submit"

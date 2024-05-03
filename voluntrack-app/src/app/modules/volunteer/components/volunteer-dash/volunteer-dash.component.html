@@ -1,5 +1,4 @@
 <div class="h-full grid grid-cols-6 grid-rows-5 gap-3">
-    <!-- table -->
     <div class="col-span-4 row-span-5 rounded-lg">
         <p-table [value]="projects" [columns]="cols" [tableStyle]="{'min-width': '60rem'}">
             <ng-template pTemplate="caption">
@@ -22,10 +21,14 @@
             </ng-template>
             <ng-template pTemplate="body" let-project>
                 <tr>
-                    <td>Humane Society</td>
-                    <td>01-01</td>
-                    <td>10</td>
-                    <td><p-tag value="120 Hours" severity="success"></p-tag></td>
+                    <td>{{ project.organization.name }}</td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.description }}</td>
+                    <td>{{ project.hours }}</td>
+                    <td>
+                        <p-tag [value]="'Approved'" *ngIf="project.approved" severity="success"></p-tag>
+                        <p-tag [value]="'Pending'" *ngIf="!project.approved" severity="warn"></p-tag>
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="summary">
@@ -35,7 +38,7 @@
             </ng-template>
         </p-table>
     </div>
-    <!-- End of Table -->
+    
 
     <!-- Request Form -->
     <div class="col-span-2 row-span-5 col-start-5 px-3 pr-10 flex flex-col items-center justify-center rounded-lg bg-slate-50 shadow-md">

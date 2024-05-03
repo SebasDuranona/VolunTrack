@@ -12,7 +12,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import {VolunteerService} from "../../../services/volunteer.service";
+import {VolunteerService} from "../../../services/volunteer/volunteer.service";
 @Component({
   selector: 'app-request-form',
   standalone: true,
@@ -37,6 +37,9 @@ import {VolunteerService} from "../../../services/volunteer.service";
 export class RequestFormComponent {
   date: Date = new Date();
   hours: number;
+  info: string;
+
+  private apiUrl = 'http://localhost:8080/voluntrack/organizations';
 
   requestForm: FormGroup;
   organizations: [any];
@@ -51,10 +54,12 @@ export class RequestFormComponent {
     ];
 
     this.hours = 0;
+    this.info = "";
 
     this.requestForm = fb.group({
       org: [''],
       date: [''],
+      info: [''],
       hours: [''],
     })
   }

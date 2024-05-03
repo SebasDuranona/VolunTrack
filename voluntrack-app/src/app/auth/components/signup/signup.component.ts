@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-
+import { VolunteerService } from '../../../modules/volunteer/services/volunteer/volunteer.service';
+import { Volunteer } from '../../../modules/volunteer/services/volunteer/volunteer';
 
 @Component({
   selector: 'app-signup',
@@ -12,22 +13,45 @@ import { InputTextModule } from 'primeng/inputtext';
     FloatLabelModule,
     FormsModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+    ReactiveFormsModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent {
-  firstname: string = '';
-  lastname: string = '';
-  username: string = '';
-  password: string = '';
+  signupForm: FormGroup;
+
+
+  constructor(private fb: FormBuilder, private volunteerService: VolunteerService) {
+    this.signupForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
+    })
+  }
 
   register() {
     // Add your register logic here
-    console.log('firstname:', this.firstname);
-    console.log('lastname:', this.lastname);
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
+    if (this.signupForm.valid) {
+      const newVolunteer: Volunteer = this.signupForm.value;
+
+      this.volunteerService.addVolunteer(newVolunteer).subscribe(
+        (response: Volunteer) => {
+          console.log('Volunteer added successfully: ', response);
+          this.signupForm.reset();
+        },
+        (error) => {
+          console.error('Error adding volunteer:', error); 
+        }
+      );
+    } else {
+      // Handle form validation errors if needed
+    }
+  }
+
+  onSubmit(): void {
+    this.register()
   }
 }

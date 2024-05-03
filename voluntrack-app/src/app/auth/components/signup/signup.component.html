@@ -5,42 +5,46 @@
           create a new volunteer account
         </h2>
       </div>
-      <form class="mt-8 space-y-6 flex-col items-center" (ngSubmit)="register()" >
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6 flex-col items-center">
+    <div class="rounded-md shadow-sm -space-y-px  flex flex-col items-center">
+        <!-- Bind firstName control -->
+        <div class="mx-auto py-5">
+            <p-floatLabel class="inline-block">
+                <input id="firstName" type="text" pInputText formControlName="firstName" />
+                <label for="firstName">First Name</label>
+            </p-floatLabel>
+        </div>
+        <!-- Bind lastName control -->
+        <div class="mx-auto py-5">
+            <p-floatLabel class="inline-block">
+                <input id="lastName" type="text" pInputText formControlName="lastName" />
+                <label for="lastName">Last Name</label>
+            </p-floatLabel>
+        </div>
+        <!-- Bind username control -->
+        <div class="mx-auto py-5">
+            <p-floatLabel class="inline-block">
+                <input id="username" type="text" pInputText formControlName="userName" />
+                <label for="username">Username</label>
+            </p-floatLabel>
+        </div>
+        <!-- Bind password control -->
+        <div class="mx-auto py-5 justify-center">
+            <p-floatLabel>
+                <input id="password" type="password" pPassword formControlName="password" />
+                <label for="password">Password</label>
+            </p-floatLabel>
+        </div>
+    </div>
 
-        <div class="rounded-md shadow-sm -space-y-px  flex flex-col items-center">
-            <div class="mx-auto py-5">
-                <p-floatLabel class=" inline-block">
-                    <input id="firstName" type="text" pInputText [(ngModel)]="firstname" />
-                    <label for="firstName">First Name</label>
-                </p-floatLabel>
-            </div>
-            <div class="mx-auto py-5">
-                <p-floatLabel class=" inline-block">
-                    <input id="lastName" type="text" pInputText [(ngModel)]="lastname" />
-                    <label for="lastName">Last Name</label>
-                </p-floatLabel>
-            </div>
-            <div class="mx-auto py-5">
-                <p-floatLabel class=" inline-block">
-                    <input id="username" type="text" pInputText [(ngModel)]="username" />
-                    <label for="username">username</label>
-                </p-floatLabel>
-            </div>
-            <div class="mx-auto py-5 justify-center">
-                <p-floatLabel>
-                    <input id="password" type="password" pPassword [(ngModel)]="password" />
-                    <label for="password">password</label>
-                </p-floatLabel>
-            </div>
-        </div>
-  
-        <div>
-          <button type="submit"
-                  class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            sign up
-          </button>
-        </div>
-      </form>
+    <div>
+        <button type="submit"
+                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Sign Up
+        </button>
+    </div>
+</form>
+
     </div>
   </div>
   
