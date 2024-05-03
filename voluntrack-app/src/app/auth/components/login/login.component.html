@@ -6,18 +6,18 @@
           sign in to your account
         </h2>
       </div>
-      <form class="mt-8 space-y-6 flex-col items-center" (ngSubmit)="login()" >
+      <form [formGroup]="loginForm" class="mt-8 space-y-6 flex-col items-center" (ngSubmit)="login()" >
 
         <div class="rounded-md shadow-sm -space-y-px  flex flex-col items-center">
             <div class="mx-auto pb-5">
                 <p-floatLabel class=" inline-block">
-                    <input id="username" type="text" pInputText [(ngModel)]="username" [ngModelOptions]="{standalone: true}"/>
+                    <input id="username" type="text" pInputText formControlName="username"/>
                     <label for="username">username</label>
                 </p-floatLabel>
             </div>
             <div class="mx-auto py-5 justify-center">
                 <p-floatLabel>
-                    <input id="password" type="password" pPassword [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+                    <input id="password" type="password" pPassword formControlName="password"/>
                     <label for="password">password</label>
                 </p-floatLabel>
             </div>

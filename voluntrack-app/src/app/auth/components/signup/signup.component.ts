@@ -5,6 +5,7 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { VolunteerService } from '../../../modules/volunteer/services/volunteer/volunteer.service';
 import { Volunteer } from '../../../modules/volunteer/services/volunteer/volunteer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -23,7 +24,7 @@ export class SignupComponent {
   signupForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private volunteerService: VolunteerService) {
+  constructor(private router: Router, private fb: FormBuilder, private volunteerService: VolunteerService) {
     this.signupForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -53,5 +54,6 @@ export class SignupComponent {
 
   onSubmit(): void {
     this.register()
+    this.router.navigate(['/volunteer'])
   }
 }

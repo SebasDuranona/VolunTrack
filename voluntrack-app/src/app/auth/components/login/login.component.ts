@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import {Router} from "@angular/router";
+import { VolunteerService } from '../../../modules/volunteer/services/volunteer/volunteer.service';
 
 @Component({
   selector: 'app-login',
@@ -12,22 +13,26 @@ import {Router} from "@angular/router";
     FloatLabelModule,
     FormsModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {
+
+  constructor(private router: Router, private fb: FormBuilder, private volunteerService: VolunteerService) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    })
   }
 
   login() {
     // Add your login logic here
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
+
     this.router.navigate(['/volunteer'])
   }
 }

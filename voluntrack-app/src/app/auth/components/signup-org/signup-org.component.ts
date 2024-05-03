@@ -25,7 +25,7 @@ export class SignupOrgComponent {
 
   constructor(private fb: FormBuilder, private organizationService: OrganizationService) {
     this.signupForm = this.fb.group({
-      organization: ['', Validators.required],
+      name: ['', Validators.required],
       userName: ['', Validators.required],
       password: ['', Validators.required],
     })
