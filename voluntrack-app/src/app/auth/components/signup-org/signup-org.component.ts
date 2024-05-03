@@ -36,13 +36,13 @@ export class SignupOrgComponent {
     if (this.signupForm.valid) {
       const newOrganization: Organization = this.signupForm.value;
 
-      this.organizationService.addOrganization(newOrganization).subscribe(
+      this.organizationService.addOrganization([newOrganization]).subscribe(
         (response: Organization) => {
           console.log('Organization added successfully: ', response);
           this.signupForm.reset()
         },
         (error) => {
-          console.error('Error adding Organization:', error); 
+          console.error('Error adding Organization:', error);
         }
       );
     } else {
