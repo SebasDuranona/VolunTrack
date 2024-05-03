@@ -37,14 +37,15 @@ export class SignupComponent {
     // Add your register logic here
     if (this.signupForm.valid) {
       const newVolunteer: Volunteer = this.signupForm.value;
+      console.log(this.signupForm.value);
 
-      this.volunteerService.addVolunteer(newVolunteer).subscribe(
+      this.volunteerService.addVolunteer([newVolunteer]).subscribe(
         (response: Volunteer) => {
           console.log('Volunteer added successfully: ', response);
           this.signupForm.reset();
         },
         (error) => {
-          console.error('Error adding volunteer:', error); 
+          console.error('Error adding volunteer:', error);
         }
       );
     } else {

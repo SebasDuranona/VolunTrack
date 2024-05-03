@@ -8,7 +8,7 @@ import { Volunteer } from './volunteer';
 })
 export class VolunteerService {
 
-  private apiUrl = 'http://localhost:8080/voluntrack/volunteers'
+  private apiUrl = 'http://localhost:8080/voluntrack/volunteer'
 
   constructor(private http: HttpClient) { }
 
@@ -21,8 +21,8 @@ export class VolunteerService {
     return this.http.get<Volunteer[]>(this.apiUrl);
   }
 
-  addVolunteer(volunteer: Volunteer): Observable<Volunteer> {
+  addVolunteer(volunteer: Volunteer[]): Observable<Volunteer> {
     return this.http.post<Volunteer>(this.apiUrl, volunteer);
   }
-  
+
 }
