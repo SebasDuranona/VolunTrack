@@ -18,4 +18,10 @@ public class Organizations {
 
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "USER_NAME")
+    private String userName;
+
+    @Column(name = "PASSWORD")
+    private String password;
 }

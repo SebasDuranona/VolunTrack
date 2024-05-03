@@ -17,11 +17,13 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './signup-org.component.scss'
 })
 export class SignupOrgComponent {
+  organization: string = '';
   username: string = '';
   password: string = '';
 
   register() {
     // Add your login logic here
+    console.log('organization:', this.organization);
     console.log('Username:', this.username);
     console.log('Password:', this.password);
   }
