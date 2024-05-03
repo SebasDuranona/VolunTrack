@@ -5,24 +5,26 @@
           create a new organization account
         </h2>
       </div>
-      <form class="mt-8 space-y-6 flex-col items-center" (ngSubmit)="register()" >
-
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6 flex-col items-center">
         <div class="rounded-md shadow-sm -space-y-px  flex flex-col items-center">
+          <!-- Bind organization control -->
           <div class="mx-auto py-5">
             <p-floatLabel class=" inline-block">
-                <input id="organization" type="text" pInputText [(ngModel)]="organization" />
+                <input id="organization" type="text" pInputText formControlName="organization" />
                 <label for="organization">Organization</label>
             </p-floatLabel>
           </div>
+          <!-- Bind username control -->
             <div class="mx-auto py-5">
                 <p-floatLabel class=" inline-block">
-                    <input id="username" type="text" pInputText [(ngModel)]="username" />
+                    <input id="username" type="text" pInputText formControlName="userName" />
                     <label for="username">username</label>
                 </p-floatLabel>
             </div>
+            <!-- Bind password control -->
             <div class="mx-auto py-5 justify-center">
                 <p-floatLabel>
-                    <input id="password" type="password" pPassword [(ngModel)]="password" />
+                    <input id="password" type="password" pPassword formControlName="password" />
                     <label for="password">password</label>
                 </p-floatLabel>
             </div>
@@ -35,6 +37,7 @@
           </button>
         </div>
       </form>
+
     </div>
   </div>
   

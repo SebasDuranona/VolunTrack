@@ -21,7 +21,7 @@ export class OrganizationService {
     return this.http.get<Organization[]>(this.apiUrl);
   }
 
-  addOrganization(project: Organization): Observable<Organization> {
-    return this.http.post<Organization>(this.apiUrl, project);
+  addOrganization(organization: Organization): Observable<Organization> {
+    return this.http.post<Organization>(this.apiUrl, organization);
   }
 }
