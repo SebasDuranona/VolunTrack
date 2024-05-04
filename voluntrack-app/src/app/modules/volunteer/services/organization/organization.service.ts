@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Organization } from './organization';
 import { HttpClient } from '@angular/common/http';
+import { SelectItem } from 'primeng/api';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +25,11 @@ export class OrganizationService {
 
   addOrganization(organization: Organization[]): Observable<Organization> {
     return this.http.post<Organization>(this.apiUrl, organization);
+  }
+
+  getOrganizationNames(): Observable<SelectItem[]> {
+    return this.http.get<Organization[]>(this.apiUrl).pipe(
+      map(organizations => organizations.map(org => ({ label: org.name, value: org.name })))
+    );
   }
 }

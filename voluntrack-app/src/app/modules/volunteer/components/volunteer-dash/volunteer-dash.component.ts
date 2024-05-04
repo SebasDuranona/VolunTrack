@@ -60,7 +60,7 @@ export class VolunteerDashComponent {
   cols: any[] = [];
 
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.cols = [
@@ -71,7 +71,8 @@ export class VolunteerDashComponent {
       { field: 'status', header: 'Status'},
     ];
 
-    this.http.get<any>('http://localhost:8080/voluntrack/projects').subscribe(
+    // this.http.get<any>('http://localhost:8080/voluntrack/projects').subscribe(
+    this.projectService.getProjects().subscribe(
       (response: any) => {
         console.log(response.data); // Log the response data to inspect its structure
         this.projects = response.data.map((project: any) => {

@@ -32,7 +32,7 @@ export class LoginComponent {
 
   login() {
     // Add your login logic here
-
+    
     this.router.navigate(['/volunteer'])
   }
 }
