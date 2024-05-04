@@ -66,12 +66,12 @@ export class RequestFormComponent {
 
   ngOnInit(): void {
 
-    this.http.get<any>('http://localhost:8080/voluntrack/organization');
     this.organizationService.getOrganizations().subscribe(
       (organizations: Organization[] | any) => {
-        if (Array.isArray(organizations)) {
-          this.organizations = organizations;
-          this.organizationNames = organizations.map(org => org.name);
+        console.log(organizations);
+        if (Array.isArray(organizations.data)) {
+          this.organizations = organizations.data;
+          // this.organizationNames = organizations.map(org => org.name);
         } else {
           console.error('Unexpected response format:', organizations);
         }

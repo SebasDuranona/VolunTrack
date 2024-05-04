@@ -27,9 +27,5 @@ export class OrganizationService {
     return this.http.post<Organization>(this.apiUrl, organization);
   }
 
-  getOrganizationNames(): Observable<SelectItem[]> {
-    return this.http.get<Organization[]>(this.apiUrl).pipe(
-      map(organizations => organizations.map(org => ({ label: org.name, value: org.name })))
-    );
-  }
+ 
 }
