@@ -7,4 +7,6 @@ import org.voluntrack.voluntrack.models.Organizations;
 @Repository
 public interface OrganizationRepository extends JpaRepository<Organizations, Integer> {
     Boolean existsByUserNameAndPassword(String userName, String password);
+
+    Organizations findByUserNameAndPassword(String userName, String password);
 }

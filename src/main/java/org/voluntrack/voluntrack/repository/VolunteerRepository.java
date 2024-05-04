@@ -9,4 +9,6 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Integer> {
     Boolean existsByUserNameAndPassword(String username, String password);
 
     Volunteer findByVolunteerId(Integer volunteerId);
+
+    Volunteer findVolunteerByUserNameAndPassword(String username, String password);
 }

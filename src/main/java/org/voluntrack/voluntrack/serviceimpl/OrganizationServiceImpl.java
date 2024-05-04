@@ -51,8 +51,13 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public ResponseVO login(LoginVO loginVO) {
         ResponseVO responseVO = new ResponseVO();
-        responseVO.setData(organizationRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword()));
-        responseVO.setResponseStatus(ResponseStatus.SUCCESS);
+        if (organizationRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword())) {
+            responseVO.setData(organizationRepository.findByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword()));
+            responseVO.setResponseStatus(ResponseStatus.SUCCESS);
+        } else {
+            responseVO.setResponseStatus(ResponseStatus.ERROR);
+            responseVO.setData(false);
+        }
         return responseVO;
     }
 
