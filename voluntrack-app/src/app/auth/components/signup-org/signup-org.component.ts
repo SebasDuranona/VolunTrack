@@ -44,7 +44,7 @@ export class SignupOrgComponent {
         (error) => {
           console.error('Error adding Organization:', error);
         }
-      );
+      ); 
     } else {
       // Handle form validation errors if needed
     }

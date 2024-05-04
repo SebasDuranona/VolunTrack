@@ -12,7 +12,15 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
+import { map } from 'rxjs';
 import {VolunteerService} from "../../../services/volunteer/volunteer.service";
+import { RequestService } from '../../../services/requests/request.service';
+import { Request } from '../../../services/requests/request';
+import { OrganizationService } from '../../../services/organization/organization.service';
+import { SelectItem } from 'primeng/api';
+import { Organization } from '../../../services/organization/organization';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-request-form',
   standalone: true,
@@ -29,34 +37,26 @@ import {VolunteerService} from "../../../services/volunteer/volunteer.service";
     DropdownModule,
     AutoCompleteModule,
     ReactiveFormsModule,
-    DialogModule
+    DialogModule,
   ],
   templateUrl: './request-form.component.html',
   styleUrl: './request-form.component.scss'
 })
 export class RequestFormComponent {
-  date: Date = new Date();
-  hours: number;
-  info: string;
 
   private apiUrl = 'http://localhost:8080/voluntrack/organizations';
 
   requestForm: FormGroup;
-  organizations: [any];
+  organizations: Organization[] = [];
+  organizationNames: string[] = [];
 
   selectedOrg: any;
 
 
   displayModal:boolean = false;
-  constructor(private fb: FormBuilder) {
-    this.organizations = [
-      {label: "Humane Society"}
-    ];
 
-    this.hours = 0;
-    this.info = "";
-
-    this.requestForm = fb.group({
+  constructor(private fb: FormBuilder, private requestService: RequestService, private organizationService: OrganizationService, private http: HttpClient) {
+    this.requestForm = this.fb.group({
       org: [''],
       date: [''],
       info: [''],
@@ -64,16 +64,29 @@ export class RequestFormComponent {
     })
   }
 
-  search() {
-    this.selectedOrg = this.organizations[0]
+  ngOnInit(): void {
+
+    this.http.get<any>('http://localhost:8080/voluntrack/organization');
+    this.organizationService.getOrganizations().subscribe(
+      (organizations: Organization[] | any) => {
+        if (Array.isArray(organizations)) {
+          this.organizations = organizations;
+          this.organizationNames = organizations.map(org => org.name);
+        } else {
+          console.error('Unexpected response format:', organizations);
+        }
+      },
+      (error) => {
+        console.error('Error fetching organizations:', error);
+      }
+    );
+
+    for (var org in this.organizations) {
+      this.organizationNames.push(org)
+    }
   }
 
-  requestHours() {
+  onSubmit() {
 
   }
-  showDialog() {
-    this.displayModal = true;
-  }
-
-
 }

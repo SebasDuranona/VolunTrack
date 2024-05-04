@@ -1,0 +1,24 @@
+image: node:20
+variables:
+  CI: 'true'
+
+# Main job
+<%= workflowName %>:
+  interruptible: true
+  only:
+    - main
+    - merge_requests
+  script:
+    # Connect your workspace on <%= nxCloudHost %> and uncomment this to enable task distribution.
+    # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "<% if(hasE2E){ %>e2e-ci<% } else { %>build<% } %>" targets have been requested
+    # - <%= packageManagerPrefix %> nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="<% if(hasE2E){ %>e2e-ci<% } else { %>build<% } %>"
+
+    <% if(packageManager == 'pnpm'){ %>
+    - npm install --prefix=$HOME/.local -g pnpm@8
+    <% } %>
+    - <%= packageManagerInstall %>
+    - NX_HEAD=$CI_COMMIT_SHA
+    - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
+
+    - <%= packageManagerPrefix %> nx-cloud record -- nx format:check --base=$NX_BASE --head=$NX_HEAD
+    - <%= packageManagerPrefix %> nx affected --base=$NX_BASE --head=$NX_HEAD -t lint test build<% if(hasE2E){ %> e2e-ci<% } %>

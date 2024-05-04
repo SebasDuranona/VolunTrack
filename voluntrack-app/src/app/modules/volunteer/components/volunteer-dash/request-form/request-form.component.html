@@ -7,14 +7,15 @@
             <h2 class="mt-6 text-center text-5xl font-extrabold text-gray-900">request hours</h2>
         </div>
 
-        <form class="rounded-md space-y-6 flex-col items-center" [formGroup]="requestForm" (ngSubmit)="requestHours()">
+        <form class="rounded-md space-y-6 flex-col items-center" [formGroup]="requestForm" (ngSubmit)="onSubmit()">
             <div class="rounded-md -space-y-px  flex flex-col items-center">
                 <div class="mx-auto pb-5 pt-2">
                     <p-floatLabel class="inline-block">
-                        <input id="org" type="text" pInputText [(ngModel)]="selectedOrg" [ngModelOptions]="{standalone: true}"/>
-                        <label for="organization">Organization</label>
+                      <p-dropdown formControlName="org" [options]="organizations" placeholder="Select an Organization" [editable]="true"></p-dropdown>
+                      <label for="organization">Organization</label>
                     </p-floatLabel>
-                </div>
+                  </div>
+                  
                     <div class="mx-auto pb-5 pt-2">
                         <div>
                             <p-floatLabel class="inline-block">
@@ -25,13 +26,13 @@
                     </div>
                 <div class="mx-auto pb-5 pt-2">
                     <p-floatLabel class=" inline-block">
-                        <input id="info" type="text" pInputText [(ngModel)]="info" [ngModelOptions]="{standalone: true}"/>
+                        <input id="info" type="text" pInputText formControlName="info" />
                         <label for="info">Project Description</label>
                     </p-floatLabel>
                 </div>
                 <div class="mx-auto pb-5 pt-2">
                     <p-floatLabel class=" inline-block">
-                        <input id="hours" type="text" pInputText [(ngModel)]="hours" [ngModelOptions]="{standalone: true}"/>
+                        <input id="hours" type="text" pInputText formControlName="hours" />
                         <label for="hours">Hours</label>
                     </p-floatLabel>
                 </div>
