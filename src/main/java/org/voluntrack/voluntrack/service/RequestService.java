@@ -9,4 +9,6 @@ public interface RequestService {
     ResponseVO getRequests();
 
     ResponseVO saveRequests(List<Request> requests);
+
+    ResponseVO getRequestsByVolunteerId(Integer volunteerId);
 }

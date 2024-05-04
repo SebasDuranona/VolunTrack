@@ -7,6 +7,7 @@ import org.voluntrack.voluntrack.enums.ResponseStatus;
 import org.voluntrack.voluntrack.models.Organizations;
 import org.voluntrack.voluntrack.repository.OrganizationRepository;
 import org.voluntrack.voluntrack.service.OrganizationService;
+import org.voluntrack.voluntrack.vo.LoginVO;
 import org.voluntrack.voluntrack.vo.ResponseVO;
 
 import java.util.List;
@@ -44,6 +45,14 @@ public class OrganizationServiceImpl implements OrganizationService {
         }
         responseVO.setResponseStatus(ResponseStatus.SUCCESS);
         responseVO.setStatusMessage("Successfully saved Data");
+        return responseVO;
+    }
+
+    @Override
+    public ResponseVO login(LoginVO loginVO) {
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setData(organizationRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword()));
+        responseVO.setResponseStatus(ResponseStatus.SUCCESS);
         return responseVO;
     }
 

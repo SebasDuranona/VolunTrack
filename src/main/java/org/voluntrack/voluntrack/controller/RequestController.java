@@ -1,5 +1,6 @@
 package org.voluntrack.voluntrack.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,10 @@ public class RequestController {
     @PostMapping()
     public ResponseEntity saveRequest(@RequestBody List<Request> requests) {
         return new ResponseEntity(requestService.saveRequests(requests), HttpStatus.OK);
+    }
+
+    @GetMapping("/{volunteerId}")
+    public ResponseEntity findRequestByVolunteer(@PathVariable Integer volunteerId) {
+        return new ResponseEntity(requestService.getRequestsByVolunteerId(volunteerId), HttpStatus.OK);
     }
 }

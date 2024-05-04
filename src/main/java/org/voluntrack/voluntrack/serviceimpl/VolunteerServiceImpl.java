@@ -7,6 +7,7 @@ import org.voluntrack.voluntrack.enums.ResponseStatus;
 import org.voluntrack.voluntrack.models.Volunteer;
 import org.voluntrack.voluntrack.repository.VolunteerRepository;
 import org.voluntrack.voluntrack.service.VolunteerService;
+import org.voluntrack.voluntrack.vo.LoginVO;
 import org.voluntrack.voluntrack.vo.ResponseVO;
 
 import java.sql.PreparedStatement;
@@ -45,6 +46,28 @@ public class VolunteerServiceImpl implements VolunteerService {
         }
         responseVO.setResponseStatus(ResponseStatus.SUCCESS);
         responseVO.setStatusMessage("Successfully Saved Data");
+        return responseVO;
+    }
+
+    @Override
+    public ResponseVO login(LoginVO loginVO) {
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setData(volunteerRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword()));
+        responseVO.setResponseStatus(ResponseStatus.SUCCESS);
+        return responseVO;
+    }
+
+    @Override
+    public ResponseVO getVolunteerById(Integer id) {
+        ResponseVO responseVO = new ResponseVO();
+        Volunteer volunteer = volunteerRepository.findByVolunteerId(id);
+        if (Objects.nonNull(volunteer)) {
+            responseVO.setData(volunteer);
+            responseVO.setResponseStatus(ResponseStatus.SUCCESS);
+        } else {
+            responseVO.setResponseStatus(ResponseStatus.ERROR);
+            responseVO.setErrorMessage("Volunteer Not Found");
+        }
         return responseVO;
     }
 }
