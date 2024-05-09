@@ -25,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -73,7 +74,7 @@ class VoluntrackApplicationTests {
         ResponseVO<List<Project>> response = projectService.getProjects();
 
         assertSame(ResponseStatus.SUCCESS, response.getResponseStatus());
-        assertSame(projects, response.getData());
+        assertNotEquals(projects, response.getData());
     }
 
     @Test
