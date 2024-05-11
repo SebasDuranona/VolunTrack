@@ -21,7 +21,7 @@ export class RequestService {
     return this.http.get<Request[]>(this.apiUrl);
   }
 
-  addRequest(request: Request): Observable<Request> {
+  addRequest(request: Request[]): Observable<Request> {
     return this.http.post<Request>(this.apiUrl, request);
   }
 }

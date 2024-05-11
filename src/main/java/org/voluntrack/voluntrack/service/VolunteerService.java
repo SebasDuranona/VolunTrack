@@ -11,7 +11,7 @@ public interface VolunteerService {
 
     ResponseVO saveVolunteers(List<Volunteer> volunteers);
 
-    ResponseVO login(LoginVO loginVO);
+    Object login(LoginVO loginVO);
 
     ResponseVO getVolunteerById(Integer id);
 }

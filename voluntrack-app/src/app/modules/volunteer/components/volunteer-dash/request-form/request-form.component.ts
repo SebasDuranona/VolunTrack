@@ -20,6 +20,9 @@ import { OrganizationService } from '../../../services/organization/organization
 import { SelectItem } from 'primeng/api';
 import { Organization } from '../../../services/organization/organization';
 import { HttpClient } from '@angular/common/http';
+import { Volunteer } from '../../../services/volunteer/volunteer';
+import { ProjectService } from '../../../services/projects/project.service';
+import { Project } from '../../../services/projects/project';
 
 @Component({
   selector: 'app-request-form',
@@ -49,44 +52,76 @@ export class RequestFormComponent {
   requestForm: FormGroup;
   organizations: Organization[] = [];
   organizationNames: string[] = [];
+  projects: Project[] = [];
 
-  selectedOrg: any;
+  selectedProject: any;
 
 
   displayModal:boolean = false;
 
-  constructor(private fb: FormBuilder, private requestService: RequestService, private organizationService: OrganizationService, private http: HttpClient) {
+  constructor(private fb: FormBuilder, 
+    private requestService: RequestService, 
+    private projectService: ProjectService, 
+    private organizationService: OrganizationService, 
+    private http: HttpClient
+  ) {
     this.requestForm = this.fb.group({
-      org: [''],
-      date: [''],
-      info: [''],
-      hours: [''],
-    })
+      requestInfo: ['', Validators.required],
+      hours: ['', Validators.required],
+      approved: [false, Validators.required], // Assuming the default value is false
+      volunteerId: ['', Validators.required], // Provide the correct default or initial value if known
+      projectId: ['', Validators.required], // Provide the correct default or initial value if known
+    });
   }
 
   ngOnInit(): void {
+    
+    // get a list of all the projects
+    this.projectService.getProjects().subscribe(
+      (response: Project[] | any) => {
+        console.log(response);
+        if (Array.isArray(response.data)) {
+          this.projects = response.data;
+        } else {
+          console.error('Unexpected response format: ', response);
+        }
+      },
+      (error) => {
+        console.error('Error fetching projects:', error);
+      }
+    );
 
     this.organizationService.getOrganizations().subscribe(
-      (organizations: Organization[] | any) => {
-        console.log(organizations);
-        if (Array.isArray(organizations.data)) {
-          this.organizations = organizations.data;
-          // this.organizationNames = organizations.map(org => org.name);
+      (response: Organization[] | any) => {
+        console.log(response);
+        if (Array.isArray(response.data)) {
+          this.organizations = response.data;
+          this.organizationNames = response.data.map((org: Organization) => org.name);
         } else {
-          console.error('Unexpected response format:', organizations);
+          console.error('Unexpected response format:', response);
         }
       },
       (error) => {
         console.error('Error fetching organizations:', error);
       }
     );
-
-    for (var org in this.organizations) {
-      this.organizationNames.push(org)
-    }
   }
 
+  // add the request to the database
   onSubmit() {
+    if (this.requestForm.valid) {
+      const newRequest: Request = this.requestForm.value;
+      console.log('Form Values:', this.requestForm.value);
 
+      this.requestService.addRequest([newRequest]).subscribe(
+        (response: Request) => {
+          console.log('Request added successfully: ', response);
+          this.requestForm.reset();
+        },
+        (error) => {
+          console.error('Error adding Request:', error);
+        }
+      )
+    }
   }
 }

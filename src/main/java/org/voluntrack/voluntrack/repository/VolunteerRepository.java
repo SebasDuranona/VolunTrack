@@ -3,6 +3,8 @@ package org.voluntrack.voluntrack.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.voluntrack.voluntrack.models.Volunteer;
+import java.util.Optional;
+
 
 @Repository
 public interface VolunteerRepository extends JpaRepository<Volunteer, Integer> {
@@ -10,5 +12,5 @@ public interface VolunteerRepository extends JpaRepository<Volunteer, Integer> {
 
     Volunteer findByVolunteerId(Integer volunteerId);
 
-    Volunteer findVolunteerByUserNameAndPassword(String username, String password);
+    Optional<Volunteer> findVolunteerByUserNameAndPassword(String username, String password);
 }

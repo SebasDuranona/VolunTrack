@@ -4,7 +4,12 @@ import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
@@ -23,6 +28,8 @@ import { Volunteer } from '../../services/volunteer/volunteer';
 import { ProjectService } from '../../services/projects/project.service';
 import { RequestFormComponent } from './request-form/request-form.component';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { VolunteerService } from '../../services/volunteer/volunteer.service';
 
 @Component({
   selector: 'app-volunteer-dash',
@@ -43,62 +50,65 @@ import { HttpClient } from '@angular/common/http';
     DialogModule,
     CardModule,
     CommonModule,
-    RequestFormComponent
+    RequestFormComponent,
   ],
   templateUrl: './volunteer-dash.component.html',
-  styleUrl: './volunteer-dash.component.scss'
+  styleUrl: './volunteer-dash.component.scss',
 })
 export class VolunteerDashComponent {
   date: Date = new Date();
 
+  displayModal: boolean = false;
 
-
-  displayModal:boolean = false;
-
-  
   projects: Project[] = [];
   cols: any[] = [];
 
+  // Current volunteer
+  volunteer: Volunteer;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private projectService: ProjectService) { }
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private projectService: ProjectService,
+    private router: Router,
+    private volunteerService: VolunteerService
+  ) {
+    // Retrieve the state passed via router
+    const navigation = this.router.getCurrentNavigation();
+    this.volunteer = navigation?.extras.state as Volunteer;
+  }
 
   ngOnInit(): void {
     this.cols = [
-      { field: "organization.name", header: 'Organization' },
-      { field: 'projectName', header: 'Project Name' }, 
-      { field: 'projectDesc', header: 'Description' }, 
-      { field: 'hours', header: 'Hours' }, 
-      { field: 'status', header: 'Status'},
+      { field: 'organization.name', header: 'Organization' },
+      { field: 'projectName', header: 'Project Name' },
+      { field: 'projectDesc', header: 'Description' },
+      { field: 'hours', header: 'Hours' },
+      { field: 'status', header: 'Status' },
     ];
 
-    // this.http.get<any>('http://localhost:8080/voluntrack/projects').subscribe(
     this.projectService.getProjects().subscribe(
       (response: any) => {
-        console.log(response.data); // Log the response data to inspect its structure
+        this.volunteerService.dataListener.subscribe((data) => {
+          this.volunteer = data;
+          console.log(data);
+        });
+
+        // console.log(this.volunteer.firstName);
         this.projects = response.data.map((project: any) => {
           const organization: Organization = {
             organizationId: project.organizations.organizationId,
             name: project.organizations.name,
             userName: project.organizations.userName,
-            password: project.organizations.password
+            password: project.organizations.password,
           };
-
-          // const Request: Request | undefined = project.requests.reduce((latest: Request | undefined, request: Request) => {
-          //   if (!latest || new Date(request.date) > new Date(latest.date)) {
-          //     return request;
-          //   } else {
-          //     return latest;
-          //   }
-          // }, undefined);
-
-          // const status: string = latestRequest ? (latestRequest.approved ? 'Approved' : 'Pending') : 'Pending';
 
           return {
             projectId: project.projectId,
             name: project.name,
             description: project.description,
             hours: parseInt(project.hours), // Convert string to number
-            organization: organization
+            organization: organization,
           };
         });
       },
@@ -108,9 +118,7 @@ export class VolunteerDashComponent {
     );
   }
 
-  requestHours() {
-
-  }
+  requestHours() {}
 
   // get list of projects
   // getProjectList() {
@@ -124,6 +132,5 @@ export class VolunteerDashComponent {
     this.displayModal = true;
   }
 
-  search() {
-  }
+  search() {}
 }

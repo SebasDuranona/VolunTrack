@@ -13,6 +13,7 @@ import org.voluntrack.voluntrack.vo.ResponseVO;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -50,16 +51,19 @@ public class VolunteerServiceImpl implements VolunteerService {
     }
 
     @Override
-    public ResponseVO login(LoginVO loginVO) {
+    public Object login(LoginVO loginVO) {
         ResponseVO responseVO = new ResponseVO();
-        if (volunteerRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword())) {
-            responseVO.setData(volunteerRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword()));
+        Optional<Volunteer> volunteer = volunteerRepository.findVolunteerByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword());
+
+        if (volunteer.isPresent()) {
+            responseVO.setData(volunteer.get());  // Set the found volunteer as the data
             responseVO.setResponseStatus(ResponseStatus.SUCCESS);
         } else {
             responseVO.setResponseStatus(ResponseStatus.ERROR);
-            responseVO.setData(false);
+            responseVO.setData("Invalid username or password");  // Optionally provide more specific error info
         }
-        return responseVO;
+        var data = responseVO.getData();
+        return data;
     }
 
     @Override

@@ -31,6 +31,7 @@ public class VolunteerController {
         return new ResponseEntity(volunteerService.login(loginVO), HttpStatus.OK);
     }
 
+
     @GetMapping("/{volunteerId}")
     public ResponseEntity getVolunteerData(@PathVariable Integer volunteerId) {
         return new ResponseEntity(volunteerService.getVolunteerById(volunteerId), HttpStatus.OK);

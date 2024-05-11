@@ -1,50 +1,67 @@
 <div class="h-full grid grid-cols-6 grid-rows-5 gap-3">
-    <div class="col-span-4 row-span-5 rounded-lg">
-        <p-table [value]="projects" [columns]="cols" [tableStyle]="{'min-width': '60rem'}">
-            <ng-template pTemplate="caption">
-                <div class="flex align-items-center justify-content-between">
-                    Fabrice
-                    <div class="justify-end w-full">
-                        <p-tag 
-                            [style]="{ 'background': 'linear-gradient(-225deg,#AC32E4 0%,#7918F2 48%,#4801FF 100%)'}"
-                            value="UNO"></p-tag>
-                        <p-tag value="120 Hours"></p-tag>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header" let-columns>
-                <tr>
-                    <th *ngFor="let col of columns">
-                        {{ col.header }}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-project>
-                <tr>
-                    <td>{{ project.organization.name }}</td>
-                    <td>{{ project.name }}</td>
-                    <td>{{ project.description }}</td>
-                    <td>{{ project.hours }}</td>
-                    <td>
-                        <p-tag [value]="'Approved'" *ngIf="project.approved" severity="success"></p-tag>
-                        <p-tag [value]="'Pending'" *ngIf="!project.approved" severity="warn"></p-tag>
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="summary">
-                <div class="flex align-items-center justify-content-between">
-                    In total there are 10 total hours.
-                </div>
-            </ng-template>
-        </p-table>
-    </div>
-    
+  <div class="col-span-4 row-span-5 rounded-lg">
+    <p-table
+      [value]="projects"
+      [columns]="cols"
+      [tableStyle]="{ 'min-width': '60rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <!-- Fabrice -->
+          <b>{{ volunteer.firstName }}</b>
+          <div class="justify-end w-full">
+            <p-tag
+              [style]="{
+                background:
+                  'linear-gradient(-225deg,#AC32E4 0%,#7918F2 48%,#4801FF 100%)'
+              }"
+              value="UNO"
+            ></p-tag>
+            <p-tag value="120 Hours"></p-tag>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-project>
+        <tr>
+          <td>{{ project.organization.name }}</td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.hours }}</td>
+          <td>
+            <p-tag
+              [value]="'Approved'"
+              *ngIf="project.approved"
+              severity="success"
+            ></p-tag>
+            <p-tag
+              [value]="'Pending'"
+              *ngIf="!project.approved"
+              severity="warn"
+            ></p-tag>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there are 10 total hours.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
 
-    <!-- Request Form -->
-    <div class="col-span-2 row-span-5 col-start-5 px-3 pr-10 flex flex-col items-center justify-center rounded-lg bg-slate-50 shadow-md">
-        <div class="">
-            <app-request-form></app-request-form>
-        </div> 
+  <!-- Request Form -->
+  <div
+    class="col-span-2 row-span-5 col-start-5 px-3 pr-10 flex flex-col items-center justify-center rounded-lg bg-slate-50 shadow-md"
+  >
+    <div class="">
+      <app-request-form></app-request-form>
     </div>
+  </div>
 </div>
-    

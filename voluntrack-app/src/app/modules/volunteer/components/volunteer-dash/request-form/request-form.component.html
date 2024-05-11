@@ -1,47 +1,68 @@
-    <div class="max-w-md w-full space-y-8 p-3">
-        <!-- <p-button (click)="showDialog()">Submit request</p-button>
+<div class="max-w-md w-full space-y-8 p-3">
+  <!-- <p-button (click)="showDialog()">Submit request</p-button>
         <p-dialog header="Title" [(visible)]="displayModal">
             Content
         </p-dialog> -->
-        <div>
-            <h2 class="mt-6 text-center text-5xl font-extrabold text-gray-900">request hours</h2>
-        </div>
+  <div>
+    <h2 class="mt-6 text-center text-5xl font-extrabold text-gray-900">
+      request hours
+    </h2>
+  </div>
 
-        <form class="rounded-md space-y-6 flex-col items-center" [formGroup]="requestForm" (ngSubmit)="onSubmit()">
-            <div class="rounded-md -space-y-px  flex flex-col items-center">
-                <div class="mx-auto pb-5 pt-2">
-                    <p-floatLabel class="inline-block">
-                      <p-dropdown formControlName="org" [options]="organizations" placeholder="Select an Organization" [editable]="true" optionLabel="name"></p-dropdown>
-                      <label for="organization">Organization</label>
-                    </p-floatLabel>
-                  </div>
-                  
-                    <div class="mx-auto pb-5 pt-2">
-                        <div>
-                            <p-floatLabel class="inline-block">
-                                <p-calendar formControlName="date" [showIcon]="false" placeholder="Select a Date"></p-calendar>
-                                <label for="date">Date</label>
-                            </p-floatLabel>
-                          </div>
-                    </div>
-                <div class="mx-auto pb-5 pt-2">
-                    <p-floatLabel class=" inline-block">
-                        <input id="info" type="text" pInputText formControlName="info" />
-                        <label for="info">Project Description</label>
-                    </p-floatLabel>
-                </div>
-                <div class="mx-auto pb-5 pt-2">
-                    <p-floatLabel class=" inline-block">
-                        <input id="hours" type="text" pInputText formControlName="hours" />
-                        <label for="hours">Hours</label>
-                    </p-floatLabel>
-                </div>
-            </div>
-            <div>
-                <p-button type="submit"
-                        class="group relative w-full flex justify-center px-4 border border-transparent">
-                  submit request
-                </p-button>
-              </div>
-        </form>
+  <form
+    class="rounded-md space-y-6 flex-col items-center"
+    [formGroup]="requestForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="rounded-md -space-y-px flex flex-col items-center">
+      <div class="mx-auto pb-5 pt-2">
+        <!-- Bind request info -->
+        <div class="mx-auto pb-5 pt-2">
+          <p-floatLabel class="inline-block">
+            <input
+              id="info"
+              type="text"
+              pInputText
+              formControlName="requestInfo"
+            />
+            <label for="info">Project Description</label>
+          </p-floatLabel>
+        </div>
+        <!-- Bind request hours -->
+        <div class="mx-auto pb-5 pt-2">
+          <p-floatLabel class="inline-block">
+            <input
+              id="hours"
+              type="number"
+              pInputText
+              formControlName="hours"
+            />
+            <label for="hours">Hours</label>
+          </p-floatLabel>
+        </div>
+        <!-- Bind request project -->
+        <div class="mx-auto pb-5 pt-2">
+          <p-floatLabel class="inline-block">
+            <p-dropdown
+              formControlName="projectId"
+              [options]="projects"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Select a Project"
+              [editable]="true"
+            ></p-dropdown>
+            <label>Projects</label>
+          </p-floatLabel>
+        </div>
+      </div>
     </div>
+    <div>
+      <p-button
+        type="submit"
+        class="group relative w-full flex justify-center px-4 border border-transparent"
+      >
+        submit request
+      </p-button>
+    </div>
+  </form>
+</div>
