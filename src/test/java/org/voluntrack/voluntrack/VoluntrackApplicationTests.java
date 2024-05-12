@@ -19,7 +19,6 @@ import org.voluntrack.voluntrack.serviceimpl.ProjectServiceImpl;
 import org.voluntrack.voluntrack.vo.LoginVO;
 import org.voluntrack.voluntrack.vo.ResponseVO;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -121,8 +120,6 @@ class VoluntrackApplicationTests {
         List<Volunteer> volunteers = new ArrayList<>();
         volunteers.add(testVolunteer);
 
-        //when(volunteerService.getVolunteers()).thenReturn(volunteers);
-
         VolunteerController volunteerController = new VolunteerController(volunteerService);
 
         ResponseEntity response = volunteerController.getVolunteers();
@@ -144,8 +141,6 @@ class VoluntrackApplicationTests {
         List<Volunteer> volunteers = new ArrayList<>();
         volunteers.add(testVolunteer);
 
-        //when(volunteerService.saveVolunteers(volunteers)).thenReturn(volunteers);
-
         VolunteerController volunteerController = new VolunteerController(volunteerService);
         ResponseEntity response = volunteerController.saveVolunteers(volunteers);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -162,8 +157,6 @@ class VoluntrackApplicationTests {
         testVolunteer.setUserName("user");
         testVolunteer.setPassword("password");
 
-        //when(volunteerService.getVolunteerById(1)).thenReturn(testVolunteer);
-
         VolunteerController volunteerController = new VolunteerController(volunteerService);
         ResponseEntity response = volunteerController.getVolunteerData(1);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -175,8 +168,6 @@ class VoluntrackApplicationTests {
         LoginVO loginVO = new LoginVO();
         loginVO.setUserName("user");
         loginVO.setPassword("password");
-
-        //when(volunteerService.login(loginVO)).thenReturn("loginSuccess");
 
         VolunteerController volunteerController = new VolunteerController(volunteerService);
         ResponseEntity response = volunteerController.login(loginVO);
@@ -195,8 +186,6 @@ class VoluntrackApplicationTests {
 
         List<Organizations> organizations = new ArrayList<>();
         organizations.add(testOrg);
-
-        //when(organizationService.getOrganizations()).thenReturn(organizations);
 
         OrganizationController organizationController = new OrganizationController(organizationService);
         ResponseEntity response = organizationController.getOrganizations();
@@ -217,8 +206,6 @@ class VoluntrackApplicationTests {
         List<Organizations> organizations = new ArrayList<>();
         organizations.add(testOrg);
 
-        //when(organizationService.saveOrganizations(organizations)).thenReturn(organizations);
-
         OrganizationController organizationController = new OrganizationController(organizationService);
         ResponseEntity response = organizationController.saveOrganizations(organizations);
 
@@ -232,12 +219,9 @@ class VoluntrackApplicationTests {
         loginVO.setUserName("user");
         loginVO.setPassword("password");
 
-        //when(organizationService.login(loginVO)).thenReturn("loginSuccess");
-
         OrganizationController organizationController = new OrganizationController(organizationService);
         ResponseEntity response = organizationController.login(loginVO);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
-
 }
