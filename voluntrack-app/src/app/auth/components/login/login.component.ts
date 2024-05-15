@@ -7,10 +7,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { Router } from '@angular/router';
 import { VolunteerService } from '../../../modules/volunteer/services/volunteer/volunteer.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,9 @@ import { VolunteerService } from '../../../modules/volunteer/services/volunteer/
     PasswordModule,
     InputTextModule,
     ReactiveFormsModule,
+    ToastModule,
   ],
+  providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -31,7 +35,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private volunteerService: VolunteerService
+    private volunteerService: VolunteerService,
+    private messageService: MessageService
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -58,7 +63,12 @@ export class LoginComponent {
         },
         (error) => {
           console.error('Login failed:', error);
-          // Optionally, handle different error cases for the user
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Login Failed',
+          });
         }
       );
     }

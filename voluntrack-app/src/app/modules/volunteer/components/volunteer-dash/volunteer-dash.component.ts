@@ -56,9 +56,6 @@ import { VolunteerService } from '../../services/volunteer/volunteer.service';
   styleUrl: './volunteer-dash.component.scss',
 })
 export class VolunteerDashComponent {
-  date: Date = new Date();
-
-  displayModal: boolean = false;
 
   projects: Project[] = [];
   cols: any[] = [];
@@ -128,9 +125,6 @@ export class VolunteerDashComponent {
   //     }
   //   )
   // }
-  showDialog() {
-    this.displayModal = true;
-  }
 
   search() {}
 }

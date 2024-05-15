@@ -1,33 +1,73 @@
 import { Component } from '@angular/core';
+
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
+import { Organization } from '../../../modules/volunteer/services/organization/organization';
+import { MessageService } from 'primeng/api';
+import { VolunteerService } from '../../../modules/volunteer/services/volunteer/volunteer.service';
+import { OrganizationService } from '../../../modules/volunteer/services/organization/organization.service';
 
 @Component({
   selector: 'app-login-org',
   standalone: true,
-  imports: [
-    FloatLabelModule,
-    FormsModule,
-    PasswordModule,
-    InputTextModule
-  ],
+  imports: [FloatLabelModule, ReactiveFormsModule, PasswordModule, InputTextModule],
+  providers: [MessageService],
   templateUrl: './login-org.component.html',
-  styleUrl: './login-org.component.scss'
+  styleUrl: './login-org.component.scss',
 })
 export class LoginOrgComponent {
-  username: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private organizationService: OrganizationService,
+    private messageService: MessageService
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
 
   login() {
-    // Add your login logic here
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-    this.router.navigate(['/volunteer']);
+    // check valid form
+    if (this.loginForm.valid) {
+      // get login credentials
+      const credentials = {
+        userName: this.loginForm.get('username')?.value,
+        password: this.loginForm.get('password')?.value,
+      };
+
+      // login
+      this.organizationService.login(credentials).subscribe(
+        (response) => {
+          console.log('Login successful: ', response);
+
+          // navigate to the org dashboard
+          this.router.navigate(['/organization'], {
+            state: { Organization: response.data },
+          });
+        },
+        (error) => {
+          console.error('Login failed:', error);
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Login Failed',
+          });
+        }
+      );
+    }
   }
 }
