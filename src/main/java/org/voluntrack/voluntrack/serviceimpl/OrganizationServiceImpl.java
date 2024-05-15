@@ -2,6 +2,7 @@ package org.voluntrack.voluntrack.serviceimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.stereotype.Service;
 import org.voluntrack.voluntrack.enums.ResponseStatus;
 import org.voluntrack.voluntrack.models.Organizations;
@@ -12,6 +13,7 @@ import org.voluntrack.voluntrack.vo.ResponseVO;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -49,16 +51,18 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public ResponseVO login(LoginVO loginVO) {
+    public Object login(LoginVO loginVO) {
         ResponseVO responseVO = new ResponseVO();
-        if (organizationRepository.existsByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword())) {
-            responseVO.setData(organizationRepository.findByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword()));
+        Optional<Organizations> organization = organizationRepository.findByUserNameAndPassword(loginVO.getUserName(), loginVO.getPassword());
+
+        if (organization.isPresent()) {
+            responseVO.setData(organization.get()); // Set the found organization as the data
             responseVO.setResponseStatus(ResponseStatus.SUCCESS);
         } else {
             responseVO.setResponseStatus(ResponseStatus.ERROR);
-            responseVO.setData(false);
+            responseVO.setData("Invalid username or password");
         }
-        return responseVO;
+        return responseVO.getData();
     }
 
 }

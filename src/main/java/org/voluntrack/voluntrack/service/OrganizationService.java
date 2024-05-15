@@ -11,5 +11,5 @@ public interface OrganizationService {
 
     ResponseVO saveOrganizations(List<Organizations> organizationsList);
 
-    ResponseVO login(LoginVO loginVO);
+    Object login(LoginVO loginVO);
 }

@@ -2,6 +2,7 @@ package org.voluntrack.voluntrack.serviceimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.stereotype.Service;
 import org.voluntrack.voluntrack.enums.ResponseStatus;
 import org.voluntrack.voluntrack.models.Volunteer;
@@ -62,8 +63,7 @@ public class VolunteerServiceImpl implements VolunteerService {
             responseVO.setResponseStatus(ResponseStatus.ERROR);
             responseVO.setData("Invalid username or password");  // Optionally provide more specific error info
         }
-        var data = responseVO.getData();
-        return data;
+        return responseVO.getData();
     }
 
     @Override
