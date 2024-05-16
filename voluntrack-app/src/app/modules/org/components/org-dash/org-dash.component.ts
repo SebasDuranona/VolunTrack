@@ -31,7 +31,6 @@ import { ProjectFormComponent } from '../project-form/project-form.component';
     TagModule,
     CommonModule,
     ProjectFormComponent,
-    
   ],
   providers: [MessageService],
   templateUrl: './org-dash.component.html',
@@ -66,13 +65,17 @@ export class OrgDashComponent {
       { field: '', header: 'Approve' }, // Custom handling for boolean
     ];
 
+    this.loadRequests();
+  }
+
+  loadRequests() {
     this.requestService.getRequests().subscribe(
       (response: any) => {
         this.requests = response.data.map((request: any) => ({
           requestId: request.requestId,
           requestInfo: request.requestInfo,
           hours: request.hours,
-          approved: request.approved ? 'Approved' : 'Pending', // Translate boolean to string
+          approved: request.approved ? 'True' : 'False', // Translate boolean to string
           volunteerId: request.volunteerId,
           projectId: request.projectId,
         }));
@@ -83,59 +86,42 @@ export class OrgDashComponent {
     );
   }
 
-  loadRequests() {
-    this.requestService.getRequests().subscribe({
-      next: (data) => {
-        this.requests = data; // Update the requests array with the fetched data
-      },
-      error: (error) => {
-        console.error('Failed to fetch requests:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to fetch requests',
-        });
-      },
-    });
-  }
+  approveRequest(request: any) {
+    console.log(request);
 
-  approveRequest(requestId: number) {
-    this.http.put(`/api/requests/${requestId}/approve`, {}).subscribe({
-      next: () => {
-        this.loadRequests(); // Reload requests to reflect changes
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Request Approved',
-        });
-      },
-      error: (error) => {
-        console.error('Error approving request:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to approve request',
-        });
-      },
-    });
-  }
-
-  denyRequest(requestId: number) {
-    this.http.put(`/api/requests/${requestId}/deny`, {}).subscribe({
-      next: () => {
-        this.loadRequests(); // Reload requests to reflect changes
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Request Denied',
-        });
-      },
-      error: (error) => {
-        console.error('Error denying request:', error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to deny request',
-        });
-      },
-    });
+    if (request && request.requestId) {
+      this.requestService.approveRequest(true, request).subscribe({
+        next: (response) => {
+          if (response.responseStatus === 'SUCCESS') {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Request Approved',
+              detail: 'The request has been approved successfully.',
+            });
+            request.approved = true;
+          } else {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Approval Failed',
+              detail: response.errorMessage,
+            });
+          }
+        },
+        error: (error) => {
+          console.error('Error approving request:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error occurred while approving the request.',
+          });
+        },
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Invalid Request',
+        detail: 'The request data is incomplete.',
+      });
+    }
   }
 }

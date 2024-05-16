@@ -23,4 +23,9 @@ export class RequestService {
   addRequest(request: Request[]): Observable<Request> {
     return this.http.post<Request>(this.apiUrl, request);
   }
+
+  approveRequest(isApproved: boolean, request: Request): Observable<any> {
+    const url = `${this.apiUrl}/approve/${isApproved}`;
+    return this.http.post<Request>(url, request);
+  }
 }

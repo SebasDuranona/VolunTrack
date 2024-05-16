@@ -25,9 +25,9 @@
             <p-tag
               [value]="request.approved"
               severity="{{
-                request.approved === 'Approved'
+                request.approved === 'True'
                   ? 'success'
-                  : request.approved === 'Denied'
+                  : request.approved === 'False'
                   ? 'danger'
                   : 'warn'
               }}"
@@ -35,8 +35,8 @@
           </td>
           <td>
             <p-button
-              *ngIf="request.approved === 'Pending'"
-              (click)="approveRequest(request.requestId)"
+              *ngIf="request.approved === 'False'"
+              (click)="approveRequest(request)"
               class="p-button-success"
             >
               Approve
