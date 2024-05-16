@@ -1,1 +1,63 @@
-<p>org-dash works!</p>
+<div class="h-full grid grid-cols-6 grid-rows-5 gap-3">
+  <div class="col-span-4 row-span-5 rounded-lg">
+    <p-table
+      [value]="requests"
+      [columns]="cols"
+      [tableStyle]="{ 'min-width': '60rem' }"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <!-- Placeholder or additional controls -->
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-request>
+        <tr>
+          <td>{{ request.requestInfo }}</td>
+          <td>{{ request.hours }}</td>
+          <td>
+            <p-tag
+              [value]="request.approved"
+              severity="{{
+                request.approved === 'Approved'
+                  ? 'success'
+                  : request.approved === 'Denied'
+                  ? 'danger'
+                  : 'warn'
+              }}"
+            ></p-tag>
+          </td>
+          <td>
+            <p-button
+              *ngIf="request.approved === 'Pending'"
+              (click)="approveRequest(request.requestId)"
+              class="p-button-success"
+            >
+              Approve
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          <!-- Total Hours: {{ totalHours }} -->
+          <!-- You'll need to compute this in your component -->
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div
+    class="col-span-2 row-span-5 col-start-5 px-3 pr-10 flex flex-col items-center justify-center rounded-lg bg-slate-50 shadow-md"
+  >
+    <div class="">
+      <app-project-form></app-project-form>
+    </div>
+  </div>
+</div>

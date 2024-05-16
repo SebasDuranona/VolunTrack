@@ -1,13 +1,13 @@
 <div class="max-w-md w-full space-y-8 p-3">
   <div>
     <h2 class="mt-6 text-center text-5xl font-extrabold text-gray-900">
-      request hours
+      create project
     </h2>
   </div>
 
   <form
     class="rounded-md space-y-6 flex-col items-center"
-    [formGroup]="requestForm"
+    [formGroup]="projectForm"
     (ngSubmit)="onSubmit()"
   >
     <div class="rounded-md -space-y-px flex flex-col items-center">
@@ -40,15 +40,16 @@
         <div class="mx-auto pb-5 pt-2">
           <p-floatLabel class="inline-block">
             <p-dropdown
-              formControlName="projectId"
-              [(ngModel)]="currentProj"
-              [options]="projects"
+              class="mx-auto"
+              formControlName="organizationId"
+              [options]="organizations"
               optionLabel="name"
               optionValue="id"
-              placeholder="Select a Project"
-              [editable]="true"
+              placeholder="Select an Organization"
+              [showClear]="true"
+              [filter]="true"
             ></p-dropdown>
-            <label>Projects</label>
+            <label>organizations</label>
           </p-floatLabel>
         </div>
       </div>
@@ -58,7 +59,7 @@
         type="submit"
         class="group relative w-full flex justify-center px-4 border border-transparent"
       >
-        submit request
+        Create Project
       </p-button>
     </div>
   </form>

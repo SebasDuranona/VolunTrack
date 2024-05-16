@@ -4,7 +4,12 @@ import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
@@ -13,7 +18,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { map } from 'rxjs';
-import {VolunteerService} from "../../../services/volunteer/volunteer.service";
+import { VolunteerService } from '../../../services/volunteer/volunteer.service';
 import { RequestService } from '../../../services/requests/request.service';
 import { Request } from '../../../services/requests/request';
 import { OrganizationService } from '../../../services/organization/organization.service';
@@ -43,10 +48,9 @@ import { Project } from '../../../services/projects/project';
     DialogModule,
   ],
   templateUrl: './request-form.component.html',
-  styleUrl: './request-form.component.scss'
+  styleUrl: './request-form.component.scss',
 })
 export class RequestFormComponent {
-
   private apiUrl = 'http://localhost:8080/voluntrack/organizations';
 
   requestForm: FormGroup;
@@ -55,27 +59,27 @@ export class RequestFormComponent {
   projects: Project[] = [];
 
   selectedProject: any;
+  currentProj!: Project;
 
+  displayModal: boolean = false;
 
-  displayModal:boolean = false;
-
-  constructor(private fb: FormBuilder, 
-    private requestService: RequestService, 
-    private projectService: ProjectService, 
-    private organizationService: OrganizationService, 
+  constructor(
+    private fb: FormBuilder,
+    private requestService: RequestService,
+    private projectService: ProjectService,
+    private organizationService: OrganizationService,
     private http: HttpClient
   ) {
     this.requestForm = this.fb.group({
       requestInfo: ['', Validators.required],
       hours: ['', Validators.required],
-      approved: [false, Validators.required], // Assuming the default value is false
-      volunteerId: ['', Validators.required], // Provide the correct default or initial value if known
-      projectId: ['', Validators.required], // Provide the correct default or initial value if known
+      approved: [false, Validators.required],
+      volunteerId: ['', Validators.required],
+      projectId: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {
-    
     // get a list of all the projects
     this.projectService.getProjects().subscribe(
       (response: Project[] | any) => {
@@ -91,12 +95,15 @@ export class RequestFormComponent {
       }
     );
 
+    // load organizations for dropdown
     this.organizationService.getOrganizations().subscribe(
       (response: Organization[] | any) => {
         console.log(response);
         if (Array.isArray(response.data)) {
           this.organizations = response.data;
-          this.organizationNames = response.data.map((org: Organization) => org.name);
+          this.organizationNames = response.data.map(
+            (org: Organization) => org.name
+          );
         } else {
           console.error('Unexpected response format:', response);
         }
@@ -109,6 +116,9 @@ export class RequestFormComponent {
 
   // add the request to the database
   onSubmit() {
+    console.log('submit');
+    console.log('current project:', this.currentProj);
+
     if (this.requestForm.valid) {
       const newRequest: Request = this.requestForm.value;
       console.log('Form Values:', this.requestForm.value);
@@ -121,7 +131,7 @@ export class RequestFormComponent {
         (error) => {
           console.error('Error adding Request:', error);
         }
-      )
+      );
     }
   }
 }

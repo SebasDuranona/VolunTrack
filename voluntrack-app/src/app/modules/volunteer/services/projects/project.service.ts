@@ -4,14 +4,12 @@ import { Observable } from 'rxjs';
 import { Project } from './project';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ProjectService {
+  private apiUrl = 'http://localhost:8080/voluntrack/projects';
 
-  private apiUrl = 'http://localhost:8080/voluntrack/projects'
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProjectByID(projectID: number): Observable<Project> {
     const url = `${this.apiUrl}/${projectID}`;
@@ -22,7 +20,7 @@ export class ProjectService {
     return this.http.get<Project[]>(this.apiUrl);
   }
 
-  addProject(project: Project): Observable<Project> {
+  addProject(project: Project[]): Observable<Project> {
     return this.http.post<Project>(this.apiUrl, project);
   }
 }
