@@ -15,11 +15,18 @@ import { Organization } from '../../../modules/volunteer/services/organization/o
 import { MessageService } from 'primeng/api';
 import { VolunteerService } from '../../../modules/volunteer/services/volunteer/volunteer.service';
 import { OrganizationService } from '../../../modules/volunteer/services/organization/organization.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login-org',
   standalone: true,
-  imports: [FloatLabelModule, ReactiveFormsModule, PasswordModule, InputTextModule],
+  imports: [
+    FloatLabelModule,
+    ReactiveFormsModule,
+    PasswordModule,
+    InputTextModule,
+    ToastModule,
+  ],
   providers: [MessageService],
   templateUrl: './login-org.component.html',
   styleUrl: './login-org.component.scss',

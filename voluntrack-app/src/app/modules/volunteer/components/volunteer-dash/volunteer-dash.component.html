@@ -1,7 +1,7 @@
 <div class="h-full grid grid-cols-6 grid-rows-5 gap-3">
   <div class="col-span-4 row-span-5 rounded-lg">
     <p-table
-      [value]="projects"
+      [value]="requests"
       [columns]="cols"
       [tableStyle]="{ 'min-width': '60rem' }"
     >
@@ -28,24 +28,23 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-project>
+      <ng-template pTemplate="body" let-request>
         <tr>
-          <td>{{ project.organization.name }}</td>
-          <td>{{ project.name }}</td>
-          <td>{{ project.description }}</td>
-          <td>{{ project.hours }}</td>
+          <td>{{ request.requestInfo }}</td>
+          <td>{{ request.hours }}</td>
           <td>
             <p-tag
-              [value]="'Approved'"
-              *ngIf="project.approved"
-              severity="success"
-            ></p-tag>
-            <p-tag
-              [value]="'Pending'"
-              *ngIf="!project.approved"
-              severity="warn"
+              [value]="request.approved"
+              severity="{{
+                request.approved === 'True'
+                  ? 'success'
+                  : request.approved === 'False'
+                  ? 'danger'
+                  : 'warn'
+              }}"
             ></p-tag>
           </td>
+          <td></td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary">

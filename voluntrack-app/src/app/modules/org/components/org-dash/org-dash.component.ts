@@ -61,8 +61,8 @@ export class OrgDashComponent {
     this.cols = [
       { field: 'requestInfo', header: 'Request Info' },
       { field: 'hours', header: 'Hours Requested' },
-      { field: 'approved', header: 'Status', customTemplate: true }, // Custom handling for boolean
-      { field: '', header: 'Approve' }, // Custom handling for boolean
+      { field: 'approved', header: 'Status', customTemplate: true },
+      { field: '', header: 'Approve' },
     ];
 
     this.loadRequests();
@@ -75,7 +75,7 @@ export class OrgDashComponent {
           requestId: request.requestId,
           requestInfo: request.requestInfo,
           hours: request.hours,
-          approved: request.approved ? 'True' : 'False', // Translate boolean to string
+          approved: request.approved ? 'True' : 'False', 
           volunteerId: request.volunteerId,
           projectId: request.projectId,
         }));

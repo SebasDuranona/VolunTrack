@@ -4,12 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
 import { TagModule } from 'primeng/tag';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
@@ -18,10 +13,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
-import { Subscription, filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Project } from '../../services/projects/project';
-import { Organization } from '../../services/organization/organization';
 import { Request } from '../../services/requests/request';
 import { Volunteer } from '../../services/volunteer/volunteer';
 
@@ -30,6 +23,7 @@ import { RequestFormComponent } from './request-form/request-form.component';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { VolunteerService } from '../../services/volunteer/volunteer.service';
+import { RequestService } from '../../services/requests/request.service';
 
 @Component({
   selector: 'app-volunteer-dash',
@@ -56,9 +50,9 @@ import { VolunteerService } from '../../services/volunteer/volunteer.service';
   styleUrl: './volunteer-dash.component.scss',
 })
 export class VolunteerDashComponent {
-
   projects: Project[] = [];
   cols: any[] = [];
+  requests: Request[] = [];
 
   // Current volunteer
   volunteer: Volunteer;
@@ -68,7 +62,8 @@ export class VolunteerDashComponent {
     private http: HttpClient,
     private projectService: ProjectService,
     private router: Router,
-    private volunteerService: VolunteerService
+    private volunteerService: VolunteerService,
+    private requestService: RequestService
   ) {
     // Retrieve the state passed via router
     const navigation = this.router.getCurrentNavigation();
@@ -77,54 +72,31 @@ export class VolunteerDashComponent {
 
   ngOnInit(): void {
     this.cols = [
-      { field: 'organization.name', header: 'Organization' },
-      { field: 'projectName', header: 'Project Name' },
-      { field: 'projectDesc', header: 'Description' },
-      { field: 'hours', header: 'Hours' },
-      { field: 'status', header: 'Status' },
+      { field: 'requestInfo', header: 'Request Info' },
+      { field: 'hours', header: 'Hours Requested' },
+      { field: 'approved', header: 'Status', customTemplate: true },
     ];
 
-    this.projectService.getProjects().subscribe(
+    this.loadRequests();
+  }
+
+  loadRequests() {
+    this.requestService.getRequests().subscribe(
       (response: any) => {
-        this.volunteerService.dataListener.subscribe((data) => {
-          this.volunteer = data;
-          console.log(data);
-        });
-
-        // console.log(this.volunteer.firstName);
-        this.projects = response.data.map((project: any) => {
-          const organization: Organization = {
-            organizationId: project.organizations.organizationId,
-            name: project.organizations.name,
-            userName: project.organizations.userName,
-            password: project.organizations.password,
-          };
-
-          return {
-            projectId: project.projectId,
-            name: project.name,
-            description: project.description,
-            hours: parseInt(project.hours), // Convert string to number
-            organization: organization,
-          };
-        });
+        this.requests = response.data.map((request: any) => ({
+          requestId: request.requestId,
+          requestInfo: request.requestInfo,
+          hours: request.hours,
+          approved: request.approved ? 'True' : 'False',
+          volunteerId: request.volunteerId,
+          projectId: request.projectId,
+        }));
       },
       (error) => {
-        console.log('Error fetching projects: ', error);
+        console.log('Error fetching requests:', error);
       }
     );
   }
-
-  requestHours() {}
-
-  // get list of projects
-  // getProjectList() {
-  //   this.projectService.getProject().subscribe(
-  //     response => {
-  //       this.projects = response;
-  //     }
-  //   )
-  // }
 
   search() {}
 }
