@@ -34,3 +34,5 @@ build/
 /Project.drawio
 /models.drawio
 /diagram.drawio
+/angular-app/node_modules/
+/angular-app/

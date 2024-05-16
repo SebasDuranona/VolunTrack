@@ -2,7 +2,6 @@ package org.voluntrack.voluntrack.serviceimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.var;
 import org.springframework.stereotype.Service;
 import org.voluntrack.voluntrack.enums.ResponseStatus;
 import org.voluntrack.voluntrack.models.Volunteer;

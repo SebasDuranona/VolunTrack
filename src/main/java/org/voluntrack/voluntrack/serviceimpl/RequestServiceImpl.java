@@ -68,4 +68,26 @@ public class RequestServiceImpl implements RequestService {
         }
         return responseVO;
     }
+
+    public ResponseVO approveOrDisapproveHours(boolean isApproved, Request request) {
+        ResponseVO responseVO = new ResponseVO();
+        Optional<Request> savedReq = requestRepository.findById(request.getRequestId());
+        if (savedReq.isPresent()) {
+            savedReq.get().setApproved(isApproved);
+            try {
+                requestRepository.save(savedReq.get());
+                responseVO.setResponseStatus(ResponseStatus.SUCCESS);
+                responseVO.setStatusMessage("Successfully Approved Request");
+                return responseVO;
+            } catch (Exception e) {
+                responseVO.setResponseStatus(ResponseStatus.ERROR);
+                responseVO.setErrorMessage(e.getMessage());
+                return responseVO;
+            }
+        } else {
+            responseVO.setResponseStatus(ResponseStatus.ERROR);
+            responseVO.setErrorMessage("No requests found for request");
+            return responseVO;
+        }
+    }
 }

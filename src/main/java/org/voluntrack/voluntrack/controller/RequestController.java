@@ -30,4 +30,9 @@ public class RequestController {
     public ResponseEntity findRequestByVolunteer(@PathVariable Integer volunteerId) {
         return new ResponseEntity(requestService.getRequestsByVolunteerId(volunteerId), HttpStatus.OK);
     }
+
+    @PostMapping("/approve/{isApproved}")
+    public ResponseEntity approveOrDenyRequest(@PathVariable Boolean isApproved, @RequestBody Request request) {
+        return new ResponseEntity(requestService.approveOrDisapproveHours(isApproved, request), HttpStatus.OK);
+    }
 }
